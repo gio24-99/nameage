@@ -1,0 +1,90 @@
+1.       The sales Pipeline is an estimation of sales revenue that will be generated in upcoming month
+
+True
+
+2.       CRM Software is known as back-office enterprise software
+
+False
+
+3.       A bill of material is a list of all the raw materials and components needed to produce a finished product.
+
+True
+
+4.       The set of skills that employees acquire in their jobs through training and experience that increases their value in the marketplace is known as human capital.
+
+True
+
+5.       Identity and access management (IAM) includes three main functions: identification, authentication, and authorization.
+
+True
+
+6.       Whereas a data mart combines databases across an entire enterprise, data warehouses are usually smaller and focus on a particular subject or department
+
+false
+
+7.       The balanced scorecard is a methodology for corporate performance management.
+
+True
+
+ 
+
+
+1.       List the steps in the purchase-to-pay process and note which ones represent financial transactions
+1. Purchase requisition
+2. RFQ and Quotations
+3. Purchase Order
+4. Goods or Services Receipt
+5. Vendor Invoice and 3-Way match
+6. Payment
+ 
+
+2.       Describe basic functionality in an ERP Warehouse Management system
+-receiving
+-putting away
+-order picking
+-shipping
+ 
+3.       List the steps in the employee life cycle.
+1. Candidate Selection
+2. Onboarding
+3. Management information
+4. Candidate attraction
+5. Candidate tracking
+ 
+4.       Explain the concept of role-based access control and how it relates to logical access.
+Role based is based on your role while logical is based on company policies, procedures, organizational culture, and electronic controls.
+ 
+
+5.       What are the four characteristics of a data warehouse?
+1. Subject oriented - Organized by subject rather than process; domains include suppliers, customers, sales, and inventory.
+2. Stable and non-volatile - Once stored, data is not changed except for a compelling reason; updates are done periodically, which differs from ERP systems that processes transactions every second. 
+3. Time variant - Reporting over a period of time. 4. Integrated - Integrates data from CRM, ERP, legacy systems, POS data, economic data, and possibly unstructured data.
+
+
+
+2.
+1. customer browses merch
+2. fills out order form
+3. order number
+4. delivery
+5. approval
+6. receipt
+
+3.
+-most important asset is people
+-data automation
+-sensitive data must be kept private/secure
+-important to every part of company
+
+4.
+-improved service
+-improved communication
+-streamlined admin processes
+-reduces costs
+-empowers managers to make better, faster strategy decisions
+
+5.       What are the four characteristics of a data warehouse?
+1. Subject oriented - Organized by subject rather than process; domains include suppliers, customers, sales, and inventory.
+2. Stable and non-volatile - Once stored, data is not changed except for a compelling reason; updates are done periodically, which differs from ERP systems that processes transactions every second. 
+3. Time variant - Reporting over a period of time. 4. Integrated - Integrates data from CRM, ERP, legacy systems, POS data, economic data, and possibly unstructured data.
+
