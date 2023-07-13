@@ -1,0 +1,7 @@
+3. select T1.first_name, T1.last_name, T1.salary, 
+
+(select T2.first_name from hr.employees T2  where T2.employee_id = T1.manager_id) as manager_firstname,
+(select T2.last_name from  hr.employees T2  where T2.employee_id = T1.manager_id) as manager_lastname,
+(select T2.salary from hr.employees T2  where T2.employee_id = T1.manager_id) as manager_salary
+
+from  hr.employees T1
