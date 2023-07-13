@@ -1,0 +1,121 @@
+TASKS 
+1. HR სქემის ცხრილებისა და აგრეგაციის ფუნქციების საშუალებით გამოიტანეთ რეგიონის მასშტაბით არსებული ჯამური, მინიმალური, მაქსიმალური და საშუალო ხელფასები დაჯგუფებული რეგიონის სახელებიის მიხედვით. ამოარჩიეთ ის რეგიონები, რომლებშიც ყველაზე დიდი საშუალო ხელფასია.
+
+SELECT    Reg.REGION_NAME
+    	, SUM(EMP.SALARY)
+FROM HR.Regions Reg
+LEFT JOIN HR.Countries C ON C.REGION_ID = Reg.REGION_ID
+LEFT JOIN HR.LOCATIONS Loc ON Loc.COUNTRY_ID = C.COUNTRY_ID
+LEFT JOIN HR.DEPARTMENTS DEP ON DEP.LOCATION_ID = Loc.LOCATION_ID
+LEFT JOIN HR.JOB_HISTORY JH ON JH.DEPARTMENT_ID=DEP.DEPARTMENT_ID
+LEFT JOIN HR.EMPLOYEES EMP ON EMP.EMPLOYEE_ID = JH.EMPLOYEE_ID
+GROUP BY Reg.REGION_NAME
+
+SELECT    Reg.REGION_NAME
+    	, MIN(EMP.SALARY)
+FROM HR.Regions Reg
+LEFT JOIN HR.Countries C ON C.REGION_ID = Reg.REGION_ID
+LEFT JOIN HR.LOCATIONS Loc ON Loc.COUNTRY_ID = C.COUNTRY_ID
+LEFT JOIN HR.DEPARTMENTS DEP ON DEP.LOCATION_ID = Loc.LOCATION_ID
+LEFT JOIN HR.JOB_HISTORY JH ON JH.DEPARTMENT_ID=DEP.DEPARTMENT_ID
+LEFT JOIN HR.EMPLOYEES EMP ON EMP.EMPLOYEE_ID = JH.EMPLOYEE_ID
+GROUP BY Reg.REGION_NAME
+
+SELECT    Reg.REGION_NAME
+    	, MAX(EMP.SALARY)
+FROM HR.Regions Reg
+LEFT JOIN HR.Countries C ON C.REGION_ID = Reg.REGION_ID
+LEFT JOIN HR.LOCATIONS Loc ON Loc.COUNTRY_ID = C.COUNTRY_ID
+LEFT JOIN HR.DEPARTMENTS DEP ON DEP.LOCATION_ID = Loc.LOCATION_ID
+LEFT JOIN HR.JOB_HISTORY JH ON JH.DEPARTMENT_ID=DEP.DEPARTMENT_ID
+LEFT JOIN HR.EMPLOYEES EMP ON EMP.EMPLOYEE_ID = JH.EMPLOYEE_ID
+GROUP BY Reg.REGION_NAME
+
+
+
+
+SELECT TOP 1 REGION_NAME
+    FROM 
+(SELECT  Reg.REGION_NAME
+    	, AVG(EMP.SALARY) AS SALARY
+FROM HR.Regions Reg
+LEFT JOIN HR.Countries C ON C.REGION_ID = Reg.REGION_ID
+LEFT JOIN HR.LOCATIONS Loc ON Loc.COUNTRY_ID = C.COUNTRY_ID
+LEFT JOIN HR.DEPARTMENTS DEP ON DEP.LOCATION_ID = Loc.LOCATION_ID
+LEFT JOIN HR.JOB_HISTORY JH ON JH.DEPARTMENT_ID=DEP.DEPARTMENT_ID
+LEFT JOIN HR.EMPLOYEES EMP ON EMP.EMPLOYEE_ID = JH.EMPLOYEE_ID
+GROUP BY Reg.REGION_NAME) AS T
+ORDER BY SALARY DESC
+
+
+
+
+
+2.  HR სქემის ცხრილების საშუალებით გამოიტანეთ იმ რეგიონის დასახელებები რომლშიც მუშაობს ერთი მაინც ისეთი თანამშრომელი, რომელსაც ყველა თანამშრომელს შორის არსებულ საშუალო ხელფასზე მეტი ხელფასი აქვს.
+
+SELECT  DISTINCT  Reg.REGION_NAME
+FROM HR.Regions Reg
+LEFT JOIN HR.Countries C ON C.REGION_ID = Reg.REGION_ID
+LEFT JOIN HR.LOCATIONS Loc ON Loc.COUNTRY_ID = C.COUNTRY_ID
+LEFT JOIN HR.DEPARTMENTS DEP ON DEP.LOCATION_ID = Loc.LOCATION_ID
+LEFT JOIN HR.JOB_HISTORY JH ON JH.DEPARTMENT_ID=DEP.DEPARTMENT_ID
+LEFT JOIN HR.EMPLOYEES EMP ON EMP.EMPLOYEE_ID = JH.EMPLOYEE_ID
+WHERE EMP.SALARY > (SELECT AVG(SALARY) FROM HR.EMPLOYEES)
+
+
+3. 3. HR სქემის EMPLOYEES ცხრილიდან გამოიტანეთ თანამშრომლებისა და მათი მენეჯერების სახელები და ხელფასები.
+
+SELECT EMP.EMPLOYEE_ID
+       ,EMP.FIRST_NAME AS EmpFirstName
+       ,EMP.LAST_NAME AS EmpLastName
+       ,EMP.SALARY AS EmployeeSalary
+       ,MNG.EMPLOYEE_ID
+       ,MNG.FIRST_NAME AS EmpFirstName
+       ,MNG.LAST_NAME AS EmpLastName
+       ,MNG.SALARY
+    FROM HR.EMPLOYEES EMP
+LEFT JOIN HR.EMPLOYEES MNG ON MNG.EMPLOYEE_ID = EMP.MANAGER_ID
+
+
+
+4. დაწერეთ რეგულარული გამოსახულება რომელიც შეამოწმებს იწყება თუ არა სიტყვა ალფავიტის დიდი T სიმბოლოთი, მოსდევს თუ არა მას მინიმუმ ორი თანხმოვანი და მთავრდება თუ არა S სიმბოლოთი.
+
+select EMP.FIRST_NAME
+from HR.EMPLOYEES EMP
+where regexp_like(EMP.FIRST_NAME, '^[A-Z]') AND regexp_like(EMP.FIRST_NAME, '%S') ;
+
+5. აღწერეთ რა განსხვავება ცხრილის ველის UNIQUE და PRIMARY KEY შეზღუდვეგს შორის. . აღწერეთ რა ტიპის შეზღუდვას წარმოადგენს ცხრილის ველზე არსებული FOREIGN_KEY შეზღუდვა.
+
+ცხრილს შესაძლებელია ქონდეს მხოლო ერთი Primary Key, რომელიც განასხვავებს ჩანაწერებს ცხრილში. სვეტს, რომელსაც ადევს Primary Key არ შეიძლება შეიცავდეს NULL-ს ასევე დუბლიკატებს. ასევე Primary Key გამოიყენება სვეტში მნიშვნელობების თანმიმდევრობის დასაცავად. ასევე მოცემული primary key-ს სვეტი შესაძლებელია გამოყენებული იქნას როგორც Foreign Key სხვა ცხრილებისთვის.
+Unique Key იდება ცხრილის სვეტებზე რათა თავიდან იქნას აცილებული დუბლიკატები მოცემულ სვეტებში. განმასხვავებელი ნიშანი Primary Key-სა და Unique Key-ის შორის არის ის რომ Unique Key-ის სვეტი შეიძლება შეიცავდეს NULL მნიშვნელობებს.
+Foreign Key ედება ცხრილის სვეტებს, რომელიც საშუალებას გვაძლევს მოცემული ცრილი გავლინკოთ სხვა ცხრილებთან (დავუკავშიროთ სხვა ცხრილის სვეტს, რომელსაც ადევს Primary Key). გალინკვის შემთხვევაში Foreign Key-ის ქვეშ არსებული სვეტის მნიშვნელობები არ უნდა იყოს განსხვავებული იმ სვეტის მნიშვნელობებისგან, რომელი ცხრილის სვეტთანაც ის გაილინკა.
+
+
+
+
+
+
+
+6. მიუთითეთ ცხრილში არსებული ველებიდან რომელი ველი/ველები შეიძლება იქნას გამოყენებული პირველადი გასაღების როლში. მიუთითეთ ცხრილში არსებული ფუნქციონალური დამოკიდებულებები.
+ 
+
+მოცმულ ცხრილში პირველადი გასაღების როლში შესაძლებელია გამოყენებული იქნას EMP_ID-ის სვეტი, რომელიც იქნება უნიკალური ყველა თანამშრომლისათვის. 
+მოცემულ ცხრილში წარმოდგენილია ინფორმაცია მოიცავს:
+ თანამშრობლების სახელებს
+თანამშრომლების მისამართებს, კერძოს ZIP კოდებს, ქალაქებს და შტატის დასახელებას.
+ასევე მოიცავს შტატის მოსახლეობის რაოდენობას და ქალაქების მოსახლეობას.
+შესაბამისად ფუნქციონალური დამოკიდებულებები შემდეგნაირი იქნება:
+თანამშრომების შესახებ ინფორმაცია;
+თანამშრობლების შტატები და ქალაქები, ZIP კოდები
+შტატების და მათი მოსახლეობის რაოდენობა
+ქალაქები და მათი მოსახლეობის რაოდენობა.
+
+7. მიუთითეთ რომელ ნორმალურ ფორმაში იმყოფება აღნიშნული ცხრილი (პასუხი დაასაბუთეთ). მიივანეთ ცხრილი მე-3 ნორმალურ ფორმამდე. აღწერეთ რა თვალსაზრისით არის მნიშვნელოვანი მონაცემთა ბაზებში ნორმალიზაციის გამოყენება.
+
+ცხრილი იმყოფება 1-ლ ნორმალურ ფორმაში, რადგანაც შეიცავს ატომურ მნიშვნელობებს.
+ნორმალიზაციის გამოყენება ბაზებში ერთობ მნიშვნელოვანია, ინფორმაციის შენახვისთვის დიდი ცხრილი, რომელიც მოიცავს მთლიან ინფორმაციას უნდა დაიყოს მცირე ზომის ცხრილებას, რომელიც ფუნქციონალურად იქნება ერთმანეთთან დაკავშირებული. ასეთი სახის დაყოფა, ე.წ ნორმალიზაცია საშუალებას იძლევა მარტივად მოხდეს ცხრილში მონაცემების დააფდეითება, ჩაინსერტება.
+მოცემული ცხრილი შესაძლებელია დაიყოს შემდეგ ცხრილებად:
+1. თანამშრომლები ( მათი აიდები და სახელები)
+2. შტატების და ქალაქები ZIP კოდებით.
+3. შტატები და მათი მოსახლეობა
+4. ქალაქები და მათი მოსახლეობა
