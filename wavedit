@@ -1,0 +1,42 @@
+1.
+select sum(salary) as sum_salary,max(salary) as max_salary, min(salary) as  min_salary, avg(salary) as avg_salary, hr.regions.region_name   
+from hr.regions   
+inner join hr.countries on hr.countries.region_id = hr.regions.region_id   
+inner join hr.locations on hr.locations.country_id = hr.countries.country_id   
+inner join hr.departments on hr.departments.location_id = hr.locations.location_id   
+inner join hr.employees on hr.employees.department_id = hr.departments.department_id   
+group by hr.regions.region_name  
+  
+2.
+select hr.regions.region_name   
+from hr.regions   
+inner join hr.countries on hr.countries.region_id = hr.regions.region_id   
+inner join hr.locations on hr.locations.country_id = hr.countries.country_id   
+inner join hr.departments on hr.departments.location_id = hr.locations.location_id   
+inner join hr.employees on hr.employees.department_id = hr.departments.department_id   
+where hr.employees.salary > (select avg(salary) from hr.employees)  
+group by hr.regions.region_name  
+  
+3.  
+select employees.first_name as employee_first_name, employees.last_name as employee_last_name, employees.salary as employee_salary,   
+    manager.first_name as manager_first_name, manager.last_name as manager_last_name, manager.salary  as manager_salary  
+from hr.employees  
+left join hr.employees manager on manager.manager_id = hr.employees.employee_id   
+  
+4.  
+select first_name  
+from hr.employees  
+where first_name REGEXP ‘^T[a,e,i,o,u]{2,}S$‘
+
+5.
+unique keys shemtxvevashi mxolod da mxolod chanawerebi iqneba unikaluri magram aseve null mnishvnelobis chawera dasashvebia,
+primary keys shemtxvevashi chanawerebi iqneba rogorc unikaluri aseve mas eqneba shezgudva da null mnishvnelobas ver mivanichebt
+foreign keys daxmarebit chven vamyarebt kavshirs ramdenime cxriltan, is sheidzleba iyos null da aseve ara unikaluri anu misi mnishvneloba sheidzleba rom meordebodes
+
+6.
+es cxrili aris employeestvis gankutvnili amitomac misi pirveladi gasagebi iqneba EMP_ID
+
+7.
+es cxrili imyofeba pirvel normalur formashi, imisatvis rom miviyvanot mesame normalur formamde mashin misi ramdenime veli unda gadavitanot sxva cxrilshi,
+magalitad emp_state, emp_city  gadavitanot location cxrilshi da emp_zip foreign keys daxmarebit isini davukavshirot ertmanets, aseve gavitanot emp_state_pop da emp_city_pop sxva cxrilshi 
+da is davakavshirot location cxrilis foreign key-it location_id
